@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  address: MyString
+  block_number: 1
+  exp_id: 1
+  capacity: 9.99
+  cell_type: MyString
+  status: MyString
+
+two:
+  address: MyString
+  block_number: 1
+  exp_id: 1
+  capacity: 9.99
+  cell_type: MyString
+  status: MyString

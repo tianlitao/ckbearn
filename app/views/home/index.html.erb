@@ -1,0 +1,182 @@
+<section class="bg-white dark:bg-gray-900 mt-28 mt-6">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      CKBearn is a decentralized, transparent, fair online lottery platform.
+    </h1>
+    <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+      It is built on top of the Nervos Network and CKB token economy, leveraging CKB smart contracts to create an automated, trustless lottery game.
+    </p>
+    <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+      <% if current_user %>
+        <a href="javascript:void(0);" id="bet_button" data-modal-target="tipModal" data-modal-toggle="tipModal" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+          Bet 1000CKB
+          <svg aria-hidden="true" class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </a>
+      <% end %>
+      <a href="/home/guide" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+        Learn more
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="flex">
+  <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800 mx-auto" id="stats" role="tabpanel" aria-labelledby="stats-tab">
+    <dl class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-4 dark:text-white sm:p-8">
+      <div class="flex flex-col items-center justify-center">
+        <dt class="mb-2 text-3xl font-extrabold"><%= @epoch.epo_num %></dt>
+        <dd class="text-gray-500 dark:text-gray-400">Current Epoch</dd>
+      </div>
+      <div class="flex flex-col items-center justify-center">
+        <dt class="mb-2 text-3xl font-extrabold"><%= @epoch.begin_number %></dt>
+        <dd class="text-gray-500 dark:text-gray-400">Begin Block</dd>
+      </div>
+
+      <div class="flex flex-col items-center justify-center">
+        <dt class="mb-2 text-3xl font-extrabold"><%= @epoch.end_number %></dt>
+        <dd class="text-gray-500 dark:text-gray-400">End Block</dd>
+      </div>
+      <div class="flex flex-col items-center justify-center">
+<!--        <dt class="mb-2 text-3xl font-extrabold"><%#= Setting.index_statistic['tip_block_number'] %></dt>-->
+<!--        <dd class="text-gray-500 dark:text-gray-400">Latest Block</dd>-->
+        <dt class="mb-2 text-3xl font-extrabold"><%= ContractReceive.where(is_use: false).sum(:capacity)/10**8 %>CKB</dt>
+        <dd class="text-gray-500 dark:text-gray-400">Current Bonus</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+<div class="w-full">
+
+  <h4 class="text-2xl font-extrabold dark:text-white my-4">Betting address</h4>
+
+  <div class="relative overflow-x-auto my-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Address
+        </th>
+        <th scope="col" class="px-6 py-3">
+          transaction_hash
+        </th>
+        <th scope="col" class="px-6 py-3">
+          block_number
+        </th>
+        <th scope="col" class="px-6 py-3">
+          CKB
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% ContractReceive.order('block_number desc').limit(10).each do |receive| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= receive.address.tap{|p| p[9...-6] = "..."} %>
+          </th>
+
+          <td class="px-6 py-4">
+            <%= link_to receive.transaction_hash, "https://pudge.explorer.nervos.org/transaction/#{receive.transaction_hash}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.block_number %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.capacity/10**8 %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <h4 class="text-2xl font-extrabold dark:text-white my-4">Winning Epochs</h4>
+
+  <div class="relative overflow-x-auto my-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-2">
+          Epoch
+        </th>
+        <th scope="col" class="px-6 py-2">
+          Block
+        </th>
+        <th scope="col" class="px-6 py-2">
+          Total Betting
+        </th>
+        <th scope="col" class="px-6 py-2">
+          Price Number
+        </th>
+        <th scope="col" class="px-6 py-2">
+          Total Bonus
+        </th>
+        <th scope="col" class="px-6 py-2">
+          Tx
+        </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <% Epoch.where.not(id: Epoch.last.id).order('epo_num desc').limit(10).each do |epoch| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= epoch.epo_num %>
+          </th>
+          <td class="px-6 py-4">
+            <%= epoch.begin_number %>~<%= epoch.end_number %>
+          </td>
+          <td class="px-6 py-4">
+            <%= epoch.sum_capacity.to_i/10**8 %>CKB
+          </td>
+          <td class="px-6 py-4">
+            <%= epoch.win_number %>
+          </td>
+          <td class="px-6 py-4">
+            <%= epoch.win_capacity.to_i/10**8 %>CKB
+          </td>
+          <td class="px-6 py-4">
+            <%= link_to epoch.win_tx, "https://pudge.explorer.nervos.org/transaction/#{epoch.win_tx}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' if epoch.win_tx %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+
+
+
+<!-- tip modal -->
+<div id="tipModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+  <div class="relative w-full max-w-2xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          Successful Request
+        </h3>
+        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="tipModal">
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="p-6 space-y-6">
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+          The transaction request has been generated.You will receive the request in the application Activity > Pending tab, and you can sign or reject it.
+        </p>
+        <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+          The transaction request will display information about the CKBearn, such as name, description and logo, along with the transaction summary.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  address: MyText
+  pub_key: MyText
+  attestation: MyText
+  key_type: MyString
+  alg: 1
+  is_admin: false
+
+two:
+  name: MyString
+  address: MyText
+  pub_key: MyText
+  attestation: MyText
+  key_type: MyString
+  alg: 1
+  is_admin: false

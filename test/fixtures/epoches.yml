@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  num: 1
+  begin_number: 1
+  end_number: 1
+  is_open: false
+  sum_capacity: 9.99
+  win_capacity: 9.99
+  win_address_num: 1
+  win_tx: MyString
+
+two:
+  num: 1
+  begin_number: 1
+  end_number: 1
+  is_open: false
+  sum_capacity: 9.99
+  win_capacity: 9.99
+  win_address_num: 1
+  win_tx: MyString

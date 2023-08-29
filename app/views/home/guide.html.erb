@@ -1,0 +1,39 @@
+<h2 class="mb-2 mt-14 text-lg font-semibold text-gray-900 dark:text-white">Price Poll Address:</h2>
+<ul class="space-y-1 text-gray-900 list-none list-inside dark:text-gray-900">
+  <li>
+    1、<%= Setting.contract_address %>
+  </li>
+</ul>
+
+
+<h2 class="mb-2 mt-14 text-lg font-semibold text-gray-900 dark:text-white">How to Participate:</h2>
+<ul class="space-y-1 text-gray-900 list-none list-inside dark:text-gray-900">
+  <li>
+    1、Login via CKBull.
+  </li>
+  <li>
+    2、Place bets, minimum 1000 CKB.
+  </li>
+  <li>
+    3、Wait for lottery draw, rewards will be sent automatically if you win.
+  </li>
+  <li>Or:</li>
+  <li>
+    1、Transfer ckb to price poll address.
+  </li>
+
+</ul>
+
+
+<h2 class="mb-2 mt-14 text-lg font-semibold text-gray-900 dark:text-white">Betting Rules:</h2>
+<ul class="space-y-1 text-gray-900 list-none list-inside dark:text-gray-900">
+  <li>
+    1、Each Epoch is one lottery period.
+  </li>
+  <li>
+    2、After an Epoch period ends, take the last character of the block ID in the first block of the new Epoch.
+  </li>
+  <li>
+    3、Match the last character of all participants' block IDs to the draw result. Those who match win the lottery. Winners evenly split the prize pool based on their bet amounts.
+  </li>
+</ul>
