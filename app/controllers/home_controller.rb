@@ -15,6 +15,10 @@ class HomeController < ApplicationController
   def get_transactions
   end
 
+  def my_info
+    @contract_receives = ContractReceive.receives.includes(:epoch).where(address: current_user.address).order('block_number desc').page(params[:page]).per(10)
+  end
+
   def login_in
     user = User.find_or_initialize_by(address: params[:address])
     user.assign_attributes({ key_type: params[:keyType], alg: params[:alg], pub_key: params[:pubkey], attestation: params[:attestation], from: 0 })

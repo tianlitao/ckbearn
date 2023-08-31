@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   get '/home/project' => 'home#project'
   get '/guide' => 'home#guide'
   get '/home/sign_tran' => 'home#sign_tran'
+  get '/my_info' => 'home#my_info'
+
+  resources :contract_receives, only: [:index]
+  resources :epochs, only: [:index]
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do

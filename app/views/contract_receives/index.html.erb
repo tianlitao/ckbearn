@@ -1,0 +1,52 @@
+
+
+<div class="w-full">
+
+  <h4 class="text-2xl font-extrabold dark:text-white my-4">Transaction List</h4>
+
+  <div class="relative overflow-x-auto my-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Address
+        </th>
+        <th scope="col" class="px-6 py-3">
+          CKB
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Epoch
+        </th>
+        <th scope="col" class="px-6 py-3">
+          number
+        </th>
+        <th scope="col" class="px-6 py-3">
+          transaction_hash
+        </th>
+      </tr>
+      </thead>
+      <tbody id="contract_receive_tables">
+      <% @contract_receives.each do |receive| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= receive.address.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2') %>
+          </th>
+          <td class="px-6 py-4">
+            <%= receive.capacity/10**8 %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.epoch&.epo_num %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.transaction_hash.last %>
+          </td>
+          <td class="px-6 py-4">
+            <%= link_to receive.transaction_hash.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{receive.transaction_hash}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @contract_receives %>
+  </div>
+</div>

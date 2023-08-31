@@ -1,0 +1,67 @@
+
+
+<div class="w-full">
+  <h4 class="text-2xl font-extrabold dark:text-white my-4">My Address:</h4>
+
+  <ul class="space-y-1 text-gray-900 list-none list-inside dark:text-gray-900">
+    <li class="w-full break-all flex">
+      <a target="_blank" class="flex items-center hover:text-blue-500" href="https://pudge.explorer.nervos.org/address/<%= current_user.address %>">
+        <%= current_user.address %>
+      </a>
+    </li>
+  </ul>
+
+  <h4 class="text-2xl font-extrabold dark:text-white my-4">My Betting</h4>
+
+  <div class="relative overflow-x-auto my-4">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          CKB
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Epoch
+        </th>
+        <th scope="col" class="px-6 py-3">
+          transaction_hash
+        </th>
+        <th scope="col" class="px-6 py-3">
+          is_win
+        </th>
+        <th scope="col" class="px-6 py-3">
+          win_capacity
+        </th>
+        <th scope="col" class="px-6 py-3">
+          win_tx
+        </th>
+      </tr>
+      </thead>
+      <tbody id="contract_receive_tables">
+      <% @contract_receives.each do |receive| %>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <%= receive.capacity.to_i/10**8 %>
+          </th>
+          <td class="px-6 py-4">
+            <%= receive.epoch&.epo_num %>
+          </td>
+          <td class="px-6 py-4">
+            <%= link_to receive.transaction_hash.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{receive.transaction_hash}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.is_win? ? 'Yes' : 'No' %>
+          </td>
+          <td class="px-6 py-4">
+            <%= receive.win_capacity.to_i/10**8 %>
+          </td>
+          <td class="px-6 py-4">
+            <%= link_to receive.epoch&.win_tx.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{receive.epoch&.win_tx}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= paginate @contract_receives %>
+  </div>
+</div>

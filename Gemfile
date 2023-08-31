@@ -79,3 +79,4 @@ gem 'rest-client'
 gem 'rails-settings-cached'
 gem 'whenever', require: false
 gem 'ckb-sdk-ruby', path: 'vendor/ckb-sdk-ruby', require: 'ckb'
+gem 'kaminari'
