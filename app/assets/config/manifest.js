@@ -6,3 +6,4 @@
 //= link controllers/index.js
 //= link controllers/application.js
 //= link packs/joyid.js
+//= link packs/joyid_ckb.js

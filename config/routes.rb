@@ -9,14 +9,14 @@ Rails.application.routes.draw do
 
   get '/home/turbo_user_info' => 'home#turbo_user_info'
   get '/home/project' => 'home#project'
-  get '/home/guide' => 'home#guide'
+  get '/guide' => 'home#guide'
   get '/home/sign_tran' => 'home#sign_tran'
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :ckbulls, only: [] do
         collection do
-          post :get_sign_in_token, :check_status, :tran_code
+          post :get_sign_in_token, :check_status, :tran_code, :joy_tran
         end
       end
     end

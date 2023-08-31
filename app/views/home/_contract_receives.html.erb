@@ -1,0 +1,19 @@
+<% ContractReceive.receives.includes(:epoch).order('block_number desc').limit(10).each do |receive| %>
+  <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      <%= receive.address.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2') %>
+    </th>
+    <td class="px-6 py-4">
+      <%= receive.capacity/10**8 %>
+    </td>
+    <td class="px-6 py-4">
+      <%= receive.epoch&.epo_num %>
+    </td>
+    <td class="px-6 py-4">
+      <%= receive.transaction_hash.last %>
+    </td>
+    <td class="px-6 py-4">
+      <%= link_to receive.transaction_hash.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{receive.transaction_hash}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>
+    </td>
+  </tr>
+<% end %>

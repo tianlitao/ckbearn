@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_013727) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_31_062100) do
   create_table "contract_receives", charset: "utf8", force: :cascade do |t|
     t.string "address"
     t.integer "block_number"
@@ -23,6 +23,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_013727) do
     t.datetime "updated_at", null: false
     t.integer "epoch_id"
     t.boolean "is_use", default: false
+    t.boolean "con_type", default: true
+    t.boolean "is_win", default: false
+    t.decimal "win_capacity", precision: 30
     t.index ["epoch_id"], name: "index_contract_receives_on_epoch_id"
   end
 
@@ -72,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_013727) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "chain"
+    t.integer "from", default: 0
   end
 
 end
