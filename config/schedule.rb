@@ -17,9 +17,9 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-# every 1.minutes do
-#   runner "ContractReceive.get_all_transactions"
-#   runner "ContractReceive.check_epoch"
-# end
+every 1.minutes do
+  runner "ContractReceive.get_all_transactions"
+  runner "ContractReceive.check_epoch"
+end
 
 # Learn more: http://github.com/javan/whenever

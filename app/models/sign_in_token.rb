@@ -55,13 +55,17 @@ class SignInToken < ApplicationRecord
 
   def self.update_task
     loop do
-      begin
-        ContractReceive.get_all_transactions
-        ContractReceive.check_epoch
-        SignInToken.update_all_status
-      rescue => e
-        p e
-      end
+      # begin
+      #   ContractReceive.check_epoch
+      # rescue => e
+      #   p e
+      # end
+      # begin
+      #   ContractReceive.get_all_transactions
+      # rescue => e
+      #   p e
+      # end
+      SignInToken.update_all_status
       sleep 2
     end
 

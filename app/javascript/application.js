@@ -41,9 +41,9 @@ $(document).on('click', '#joyid-bet-button',function(){
             success: function (data){
                 if(data.success){
                     $('#tip_a').attr({
-                        href: 'https://pudge.explorer.nervos.org/transaction/' + data.tx,
-                        text: data.tx
+                        href: 'https://pudge.explorer.nervos.org/transaction/' + data.tx
                     })
+                    $('#tip_a').text(data.tx)
                     $('#alert-tip').show();
                 }else{
                     alert(data.message)

@@ -37,8 +37,8 @@
           <td class="px-6 py-4">
             <%= receive.epoch&.epo_num %>
           </td>
-          <td class="px-6 py-4">
-            <%= receive.transaction_hash.last %>
+          <td class="px-6 py-2">
+            <span class="w-7 h-7 bg-[#1A56DB] rounded-full text-white px-[1px] flex items-center justify-center"><%= receive.transaction_hash.last %></span>
           </td>
           <td class="px-6 py-4">
             <%= link_to receive.transaction_hash.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{receive.transaction_hash}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' %>

@@ -40,11 +40,11 @@
           <td class="px-6 py-4">
             <%= (epoch.sum_capacity.to_i/10**8).to_i %>CKB
           </td>
-          <td class="px-6 py-4">
-            <%= epoch.win_number %>
+          <td class="px-6 py-2">
+            <span class="w-7 h-7 bg-[#1A56DB] rounded-full text-white px-[1px] flex items-center justify-center"><%= epoch.win_number %></span>
           </td>
           <td class="px-6 py-4">
-            <%= epoch.win_capacity.to_i/10**8 %>CKB
+            <%= epoch.win_tx.present? ? (epoch.sum_capacity * 0.95).to_i/10**8 : 0 %>CKB
           </td>
           <td class="px-6 py-4">
             <%= link_to epoch.win_tx.to_s.gsub(/(.{9}).*(.{6})/,'\1...\2'), "https://pudge.explorer.nervos.org/transaction/#{epoch.win_tx}",target: '_blank',class: 'font-medium text-blue-600 dark:text-blue-500 hover:underline' if epoch.win_tx %>

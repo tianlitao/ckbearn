@@ -25,7 +25,11 @@ class ContractReceive < ApplicationRecord
         rece.assign_attributes(address: att['display_inputs'][0]['address_hash'],capacity: att['income'])
         rece.save if rece.changed?
       end
-      break if (page_size * page) > data['meta']['total']
+      if (page_size * page) > data['meta']['total']
+        break
+      else
+        page = page + 1
+      end
     end
   end
 
